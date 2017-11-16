@@ -7,6 +7,7 @@ This Demo will show how to call an pre-trained imagenet model to predict picture
 ├─ prediction.cpp                 % C++ file
 ├─ vgg_model.py                   % TensorFlow vgg model   
 ├─ makefile                       % Compile file
+├─ little_demo                    % An simple Demo
 └─ test_pic/                      % Test pictures
 	├─ cat.jpeg     
 	├─ puzzle.jpeg
