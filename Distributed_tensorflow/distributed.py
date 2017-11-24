@@ -217,9 +217,8 @@ def main(unused_argv):
                     batch_acc = sess.run([accuracy],feed_dict={x:batch_x, y_:batch_y, keep_prob: 1.0})
 
                     train_loss += batch_loss
-                    train_acc  += batch_acc
                     pre_index  += FLAGS.batch_size
-                    print("iteration: %d/%d, train_loss: %.4f, train_acc: %.4f" %(it, FLAGS.iteration, train_loss / it, train_acc / it) , end='\r')      
+                    print("iteration: %d/%d, train_loss: %.4f" %(it, FLAGS.iteration, train_loss / it, ) , end='\r')      
 
             sess.close()
 
