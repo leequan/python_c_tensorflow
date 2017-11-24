@@ -214,7 +214,7 @@ def main(unused_argv):
                     batch_x = data_augmentation(batch_x)
 
                     _, batch_loss, _ = sess.run([train_step, cross_entropy, global_step],feed_dict={x:batch_x, y_:batch_y, keep_prob: FLAGS.dropout, learning_rate: lr})
-                    batch_acc = accuracy.eval(feed_dict={x:batch_x, y_:batch_y, keep_prob: 1.0})
+                    batch_acc = sess.run([accuracy],feed_dict={x:batch_x, y_:batch_y, keep_prob: 1.0})
 
                     train_loss += batch_loss
                     train_acc  += batch_acc
