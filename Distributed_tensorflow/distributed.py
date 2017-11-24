@@ -167,7 +167,7 @@ def main(unused_argv):
             l2 = tf.add_n([tf.nn.l2_loss(var) for var in tf.trainable_variables()])
 
         with tf.name_scope('train_step'):
-            train_step = tf.train.MomentumOptimizer(learning_rate, FLAGS.momentum,use_nesterov=True).minimize(cross_entropy + l2 * FLAGS.weight_decay)
+            train_step = tf.train.MomentumOptimizer(learning_rate, FLAGS.momentum,use_nesterov=True).minimize(cross_entropy + l2 * FLAGS.weight_decay,global_step=global_step)
 
         with tf.name_scope('prediction'):
             correct_prediction = tf.equal(tf.argmax(output,1), tf.argmax(y_,1))
@@ -213,11 +213,12 @@ def main(unused_argv):
 
                     batch_x = data_augmentation(batch_x)
 
-                    _, batch_loss, _ = sess.run([train_step, cross_entropy, global_step],feed_dict={x:batch_x, y_:batch_y, keep_prob: FLAGS.dropout, learning_rate: lr})
+                    _, batch_loss, _ = sess.run([train_step,cross_entropy, global_step],feed_dict={x:batch_x, y_:batch_y, keep_prob: FLAGS.dropout, learning_rate: lr})
                     batch_acc = sess.run([accuracy],feed_dict={x:batch_x, y_:batch_y, keep_prob: 1.0})
 
                     train_loss += batch_loss
                     pre_index  += FLAGS.batch_size
+                    print( 'Worker %d: traing step %d dome (global step:%d)' % (FLAGS.task_index, it, step))
                     print("iteration: %d/%d, train_loss: %.4f" %(it, FLAGS.iteration, train_loss / it, ) , end='\r')      
 
             sess.close()
